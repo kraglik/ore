@@ -1,12 +1,15 @@
 Ore
 ===
 
-A simple WIP pythonic parser combinator library inspired by Haskell's attoparsec.
+A simple WIP pythonic parser combinator library inspired by Haskell's
+attoparsec.
 
 It supports two styles: declarative and imperative.
 
 For example, declarative style looks like the following:
-.. code-block:: python
+
+.. code:: python3
+
     from ore.combinators import alphabet, transform
     from ore.combinators import sequence, take_while_possible
 
@@ -23,9 +26,10 @@ For example, declarative style looks like the following:
         join
     )
 
-
 The very same combinator could be written as function:
-.. code-block:: python
+
+.. code:: python3
+
     from typing import Tuple
 
     from ore.combinators import alphabet
@@ -43,8 +47,10 @@ The very same combinator could be written as function:
             state
         )
 
-To run a parser on a given text, use "run" or "run_safe":
-.. code-block:: python
+To run a parser on a given text, use ``run`` or ``run_safe``:
+
+.. code:: python3
+
     from typing import Tuple
 
     from ore.combinators import alphabet
@@ -67,14 +73,12 @@ To run a parser on a given text, use "run" or "run_safe":
 
     assert name_result.value == "Ore"
 
-The difference between "run" and "run_safe" is that "run_safe" returns result without raising exceptions.
-Exceptions saved in the result instead.
-"run" just throws exceptions without saving them into result.
 
 Installation
 ============
 
-To install this library, just type
-.. code-block:: bash
-    pip install ore-combinators
+To install Ore, just run the following command:
 
+.. code:: bash
+
+    pip install ore-combinators
