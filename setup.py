@@ -1,5 +1,5 @@
 try:
-    from setuptools import setup
+    from setuptools import setup, find_packages
 except ImportError:
     from distutils.core import setup
 
@@ -18,7 +18,7 @@ setup(
     long_description=readme,
     long_description_content_type='text/markdown',
     name='ore-combinators',
-    version='0.0.1',
+    version='0.0.3',
     description='Parser combinator library for Python',
     python_requires='==3.*,>=3.6.0',
     project_urls={'homepage': 'https://github.com/kraglik/ore', 'repository': 'https://github.com/kraglik/ore'},
@@ -26,7 +26,7 @@ setup(
     author_email='kraglik.i.d@gmail.com',
     license='MIT',
     keywords='parser combinator ore',
-    packages=['ore'],
+    packages=find_packages(),
     package_data={},
     install_requires=[],
     extras_require={},
