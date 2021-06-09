@@ -1,5 +1,5 @@
 from examples.imperative_lisp_parser import *
-from ore import run_safe
+from ore_combinators import run_safe
 
 
 def main():

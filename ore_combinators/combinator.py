@@ -1,8 +1,8 @@
 from typing import Tuple, Any
 from abc import abstractmethod
 
-from ore.parser_state import ParserState
-from ore.result import Result
+from ore_combinators.parser_state import ParserState
+from ore_combinators.result import Result
 
 
 class combinator:   # noqa

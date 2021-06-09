@@ -1,5 +1,5 @@
 from typing import Optional
-from ore.source_position import SourcePosition
+from ore_combinators.source_position import SourcePosition
 
 
 class ParserError(Exception):

@@ -1,7 +1,7 @@
 from typing import Tuple
 
-from ore.combinators import *
-from ore import ParserState, Result, ParserError, Source, combinator_function
+from ore_combinators.combinators import *
+from ore_combinators import ParserState, Result, ParserError, Source, combinator_function
 from examples.lisp_ast import *
 
 

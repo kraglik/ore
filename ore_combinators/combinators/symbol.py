@@ -1,9 +1,9 @@
 from typing import Tuple, Any
 
-from ore.combinator import combinator
-from ore.parser_state import ParserState
-from ore.result import Result
-from ore.error import ParserError, EndOfFileError
+from ore_combinators.combinator import combinator
+from ore_combinators.parser_state import ParserState
+from ore_combinators.result import Result
+from ore_combinators.error import ParserError, EndOfFileError
 
 
 class SymbolError(ParserError):

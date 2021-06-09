@@ -1,4 +1,4 @@
-from ore.source_span import SourceSpan, SourcePosition
+from ore_combinators.source_span import SourceSpan, SourcePosition
 
 
 class Source:

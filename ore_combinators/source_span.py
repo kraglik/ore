@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from ore.source_position import SourcePosition, SymbolPosition, Row, Column
+from ore_combinators.source_position import SourcePosition, SymbolPosition, Row, Column
 
 
 class SourceSpan:

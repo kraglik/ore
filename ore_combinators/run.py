@@ -1,7 +1,7 @@
 from typing import Union, Tuple
 
-from ore.combinators import safe
-from ore import Source, ParserState, combinator, Result
+from ore_combinators.combinators import safe
+from ore_combinators import Source, ParserState, combinator, Result
 
 
 def run(parser: Union[callable, combinator], text: str) -> Result:

@@ -1,5 +1,5 @@
-from ore.source import Source
-from ore.source_position import SourcePosition, Row, Column, SymbolPosition
+from ore_combinators.source import Source
+from ore_combinators.source_position import SourcePosition, Row, Column, SymbolPosition
 
 
 class ParserState:
