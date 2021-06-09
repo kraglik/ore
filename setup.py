@@ -16,6 +16,7 @@ if os.path.exists(readme_path):
 
 setup(
     long_description=readme,
+    long_description_content_type='text/markdown',
     name='ore-combinators',
     version='0.0.1',
     description='Parser combinator library for Python',
