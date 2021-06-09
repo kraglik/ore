@@ -33,7 +33,7 @@ from ore_combinators import combinator_function, ParserState, Result
 
 
 @combinator_function()
-def name(state: ParserState) -> Tuple[Result, ParserState]:
+def name(state: ParserState) -> Tuple[str, ParserState]:
     first_symbol, state = alphabet(state)
     other_symbols, state = take_while_possible(alphabet)(state)
 
@@ -55,7 +55,7 @@ from ore_combinators import run_safe, combinator_function
 
 
 @combinator_function()
-def name(state: ParserState) -> Tuple[Result, ParserState]:
+def name(state: ParserState) -> Tuple[str, ParserState]:
     first_symbol, state = alphabet(state)
     other_symbols, state = take_while_possible(alphabet)(state)
 
