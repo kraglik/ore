@@ -1,0 +1,29 @@
+from typing import Tuple
+
+from ore.combinator import combinator
+from ore.parser_state import ParserState
+from ore.result import Result
+from ore.error import ParserError
+
+
+class TransformError(ParserError):
+    pass
+
+
+class transform(combinator):   # noqa
+    def __init__(self, c: combinator, transformation_function: callable):
+        self._combinator = c
+        self._transformation_function = transformation_function
+
+    def __call__(self, state: ParserState) -> Tuple[Result, ParserState]:
+
+        try:
+            combinator_result, new_state = self._combinator(state)
+        except ParserError as e:
+            raise TransformError(
+                message='Result transformation error: failed to obtain a result',
+                position=state.position,
+                nested_error=e
+            )
+
+        return Result.make_value(self._transformation_function(combinator_result.value), new_state)

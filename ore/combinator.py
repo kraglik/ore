@@ -1,0 +1,27 @@
+from typing import Tuple
+from abc import abstractmethod
+
+from ore.parser_state import ParserState
+from ore.result import Result
+
+
+class combinator:   # noqa
+    @abstractmethod
+    def __call__(self, state: ParserState) -> Tuple[Result, ParserState]:
+        raise NotImplementedError
+
+
+def combinator_function(custom_error=None):
+    def d(f):
+        def g(*args, **kwargs):
+            if custom_error is not None:
+                try:
+                    return f(*args, **kwargs)
+                except Exception as e:
+                    raise custom_error(e)
+            else:
+                return f(*args, **kwargs)
+
+        g.is_combinator = True
+        return g
+    return d
