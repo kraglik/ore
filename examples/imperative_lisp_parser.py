@@ -23,30 +23,30 @@ name_allowed_symbols = alt(one_of_symbols('-_?+/*^%#@!<>'), alphabet)
 
 @combinator_function()
 def parse_name(state):
-    first_symbol_result, state = name_allowed_symbols(state)
-    other_symbols_result, state = take_while_possible(name_allowed_symbols)(state)
+    first_symbol, state = name_allowed_symbols(state)
+    other_symbols, state = take_while_possible(name_allowed_symbols)(state)
 
     return Result.make_value(
-        NameNode(first_symbol_result.value + ''.join(other_symbols_result.value)),
+        NameNode(first_symbol + ''.join(other_symbols)),
         state
     )
 
 
 @combinator_function()
 def parse_int(state):
-    digits_result, state = take_while_possible(digits)(state)
+    int_digits, state = take_while_possible(digits)(state)
 
-    return Result.make_value(IntNumber(int(''.join(digits_result.value))), state)
+    return Result.make_value(IntNumber(int(''.join(int_digits))), state)
 
 
 @combinator_function()
 def parse_float(state):
-    integral_part_result, state = take_while_possible(digits)(state)
+    integral_part, state = take_while_possible(digits)(state)
     _, state = symbol('.')(state)
-    fractional_part_result, state = take_while_possible(digits)(state)
+    fractional_part, state = take_while_possible(digits)(state)
 
     return Result.make_value(
-        FloatNumber(float(f'{"".join(integral_part_result.value)}.{"".join(fractional_part_result.value)}')),
+        FloatNumber(float(f'{"".join(integral_part)}.{"".join(fractional_part)}')),
         state
     )
 
@@ -67,7 +67,7 @@ def parse_string(state):
     _, state = symbol('"')(state)
 
     return Result.make_value(
-        String(''.join(string_result.value)),
+        String(''.join(string_result)),
         state
     )
 
@@ -112,7 +112,7 @@ def parse_list(state):
     _, state = right(state)
 
     return Result.make_value(
-        ListNode(items.value),
+        ListNode(items),
         state
     )
 
@@ -141,4 +141,4 @@ def parse_app(state):
     )(state)
     _, state = right(state)
 
-    return Result.make_value(Application(fun_name.value, items.value), state)
+    return Result.make_value(Application(fun_name, items), state)

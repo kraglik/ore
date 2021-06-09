@@ -1,4 +1,4 @@
-from typing import Tuple, Union
+from typing import Tuple, Union, Any
 
 from ore.combinator import combinator
 from ore.parser_state import ParserState
@@ -15,7 +15,7 @@ class take_while(combinator):   # noqa
         self._condition = condition
         self._combinator = c
 
-    def __call__(self, state: ParserState) -> Tuple[Result, ParserState]:
+    def __call__(self, state: ParserState) -> Tuple[Any, ParserState]:
         output = []
 
         initial_state = state
@@ -46,10 +46,10 @@ class take_while(combinator):   # noqa
                     nested_error=e
                 )
 
-            if not isinstance(self._condition, combinator) and not self._condition(result.value):
+            if not isinstance(self._condition, combinator) and not self._condition(result):
                 break
 
-            output.append(result.value)
+            output.append(result)
 
         return Result.make_value(
             output,

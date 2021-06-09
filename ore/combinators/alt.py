@@ -1,4 +1,4 @@
-from typing import Tuple, Union
+from typing import Tuple, Union, Any
 
 from ore.combinator import combinator
 from ore.error import ParserError
@@ -14,7 +14,7 @@ class alt(combinator):  # noqa
     def __init__(self, *combinators: Union[combinator, callable]):
         self._combinators = list(combinators)
 
-    def __call__(self, state: ParserState) -> Tuple[Result, ParserState]:
+    def __call__(self, state: ParserState) -> Tuple[Any, ParserState]:
         for c in self._combinators:
             if not isinstance(c, combinator) and not hasattr(c, 'is_combinator'):
                 c = c()

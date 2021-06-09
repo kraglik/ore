@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Any
 
 from ore.combinator import combinator
 from ore.parser_state import ParserState
@@ -11,7 +11,7 @@ class AnySymbolError(ParserError):
 
 
 class any_symbol(combinator):   # noqa
-    def __call__(self, state: ParserState) -> Tuple[Result, ParserState]:
+    def __call__(self, state: ParserState) -> Tuple[Any, ParserState]:
         if state.is_at_end():
             raise EndOfFileError(position=state.position)
 

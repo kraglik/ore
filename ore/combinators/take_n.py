@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Any
 
 from ore.combinator import combinator
 from ore.parser_state import ParserState
@@ -15,7 +15,7 @@ class take_n(combinator):   # noqa
         self._amount = amount
         self._combinator = c
 
-    def __call__(self, state: ParserState) -> Tuple[Result, ParserState]:
+    def __call__(self, state: ParserState) -> Tuple[Any, ParserState]:
         output = []
 
         initial_state = state
@@ -29,6 +29,6 @@ class take_n(combinator):   # noqa
             except ParserError as e:
                 raise TakeNError(message="Can't tale n elements", position=state.position, nested_error=e)
 
-            output.append(result.value)
+            output.append(result)
 
         return Result.make_value(output, state)

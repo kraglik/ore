@@ -16,4 +16,4 @@ class safe(combinator):  # noqa
         except Exception as e:
             return Result.make_error(e, state)
 
-        return result, new_state
+        return Result(value=result), new_state

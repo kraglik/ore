@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Any
 from abc import abstractmethod
 
 from ore.parser_state import ParserState
@@ -7,7 +7,7 @@ from ore.result import Result
 
 class combinator:   # noqa
     @abstractmethod
-    def __call__(self, state: ParserState) -> Tuple[Result, ParserState]:
+    def __call__(self, state: ParserState) -> Tuple[Any, ParserState]:
         raise NotImplementedError
 
 

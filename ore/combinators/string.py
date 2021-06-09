@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Any
 
 from ore.combinator import combinator
 from ore.parser_state import ParserState
@@ -14,7 +14,7 @@ class string(combinator):   # noqa
     def __init__(self, s: str):
         self._string = s
 
-    def __call__(self, state: ParserState) -> Tuple[Result, ParserState]:
+    def __call__(self, state: ParserState) -> Tuple[Any, ParserState]:
         initial_state = state
 
         for char in self._string:

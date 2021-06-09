@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Any
 
 from ore.combinator import combinator
 from ore.parser_state import ParserState
@@ -14,7 +14,7 @@ class sequence(combinator):   # noqa
     def __init__(self, *combinators: combinator):
         self._combinators = combinators
 
-    def __call__(self, state: ParserState) -> Tuple[Result, ParserState]:
+    def __call__(self, state: ParserState) -> Tuple[Any, ParserState]:
         results = []
 
         for c in self._combinators:
@@ -29,6 +29,6 @@ class sequence(combinator):   # noqa
                     nested_error=e
                 )
 
-            results.append(result.value)
+            results.append(result)
 
         return Result.make_value(results, state)

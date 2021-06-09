@@ -7,7 +7,7 @@ from ore import Source, ParserState, combinator, Result
 def run(parser: Union[callable, combinator], text: str) -> Result:
     result, _ = parser(ParserState(Source(text)))
 
-    return result
+    return Result(value=result)
 
 
 def run_safe(parser: Union[callable, combinator], text: str) -> Result:

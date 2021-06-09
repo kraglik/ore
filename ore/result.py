@@ -19,7 +19,7 @@ class Result:
 
     @staticmethod
     def make_value(value, state):
-        return Result(value=value, error=None), state
+        return value, state
 
     @staticmethod
     def make_error(error, state):

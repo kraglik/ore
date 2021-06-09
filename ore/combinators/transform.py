@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Any
 
 from ore.combinator import combinator
 from ore.parser_state import ParserState
@@ -15,7 +15,7 @@ class transform(combinator):   # noqa
         self._combinator = c
         self._transformation_function = transformation_function
 
-    def __call__(self, state: ParserState) -> Tuple[Result, ParserState]:
+    def __call__(self, state: ParserState) -> Tuple[Any, ParserState]:
 
         try:
             combinator_result, new_state = self._combinator(state)
@@ -26,4 +26,4 @@ class transform(combinator):   # noqa
                 nested_error=e
             )
 
-        return Result.make_value(self._transformation_function(combinator_result.value), new_state)
+        return Result.make_value(self._transformation_function(combinator_result), new_state)
