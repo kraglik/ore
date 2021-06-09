@@ -6,8 +6,8 @@ It supports two styles: declarative and imperative.
 
 For example, declarative style looks like the following:
 ```python3
-from ore.combinators import alphabet, transform
-from ore.combinators import sequence, take_while_possible
+from ore_combinators.combinators import alphabet, transform
+from ore_combinators.combinators import sequence, take_while_possible
 
 join = lambda l: ''.join(l)
 
@@ -27,9 +27,9 @@ The very same combinator could be written as function:
 ```python3
 from typing import Tuple
 
-from ore.combinators import alphabet
-from ore.combinators import take_while_possible
-from ore import combinator_function, ParserState, Result
+from ore_combinators.combinators import alphabet
+from ore_combinators.combinators import take_while_possible
+from ore_combinators import combinator_function, ParserState, Result
 
 
 @combinator_function()
@@ -38,7 +38,7 @@ def name(state: ParserState) -> Tuple[Result, ParserState]:
     other_symbols, state = take_while_possible(alphabet)(state)
 
     return Result.make_value(
-        first_symbol.value + ''.join(other_symbols.value),
+        first_symbol + ''.join(other_symbols),
         state
     )
 ```
@@ -48,10 +48,10 @@ To run a parser on a given text, use `run` or `run_safe`:
 ```python3
 from typing import Tuple
 
-from ore.combinators import alphabet
-from ore.combinators import take_while_possible
-from ore import ParserState, Result
-from ore import run_safe, combinator_function
+from ore_combinators.combinators import alphabet
+from ore_combinators.combinators import take_while_possible
+from ore_combinators import ParserState, Result
+from ore_combinators import run_safe, combinator_function
 
 
 @combinator_function()
@@ -60,7 +60,7 @@ def name(state: ParserState) -> Tuple[Result, ParserState]:
     other_symbols, state = take_while_possible(alphabet)(state)
 
     return Result.make_value(
-        first_symbol.value + ''.join(other_symbols.value),
+        first_symbol + ''.join(other_symbols),
         state
     )
 
