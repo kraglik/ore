@@ -1,16 +1,6 @@
-from typing import Tuple
-
 from ore_combinators.combinators import *
-from ore_combinators import ParserState, Result, ParserError, Source, combinator_function
+from ore_combinators import Result, combinator_function
 from examples.lisp_ast import *
-
-
-def list_of_symbols_to_name(l):
-    return NameNode(''.join(l))
-
-
-def list_of_elements_to_string(l):
-    return join_list(l[1])
 
 
 left = symbol('(')
@@ -18,7 +8,10 @@ right = symbol(')')
 
 join_list = lambda l: ''.join(l)    # noqa
 
-name_allowed_symbols = alt(one_of_symbols('-_?+/*^%#@!<>'), alphabet)
+name_allowed_symbols = alt(
+    one_of_symbols('-_?+/*^%#@!<>'),
+    alphabet
+)
 
 
 @combinator_function()
@@ -73,42 +66,38 @@ def parse_string(state):
 
 
 parse_value = alt(parse_float, parse_int, parse_string)
-whitespace_eater = take_while(any_symbol(), one_of_symbols([' ', '\t']))
-empty_line_eater = take_while(
-    any_symbol(),
-    sequence(
-        whitespace_eater,
-        newline
+whitespace = one_of_symbols([' ', '\t'])
+whitespace_eater = sequence(
+    whitespace,
+    take_while_possible(whitespace)
+)
+empty_line = sequence(
+    take_while_possible(whitespace),
+    newline
+)
+empty_symbol_eater = take_while_possible(
+    alt(
+        empty_line,
+        whitespace_eater
     )
 )
-empty_symbol_eater = transform(
-    take_while(
-        any_symbol(),
-        alt(
-            newline,
-            symbol(' '),
-            symbol('\t')
-        )
-    ),
-    lambda _: None
-)
 
 
-@combinator_function()
+@combinator_function(custom_error="Failed to parse list item")
+def parse_list_item(state):
+    item, state = parse_value(state)
+    _, state = empty_symbol_eater(state)
+
+    return item, state
+
+
+@combinator_function(custom_error="Failed to parse list")
 def parse_list(state):
     _, state = empty_symbol_eater(state)
     _, state = left(state)
     _, state = empty_symbol_eater(state)
 
-    items, state = take_while_possible(
-        transform(
-            sequence(
-                parse_value,
-                empty_symbol_eater
-            ),
-            lambda l: l[0]
-        )
-    )(state)
+    items, state = take_while_possible(parse_list_item)(state)
     _, state = right(state)
 
     return Result.make_value(
@@ -117,7 +106,20 @@ def parse_list(state):
     )
 
 
-@combinator_function(custom_error=None)
+@combinator_function(custom_error="Failed to parse argument")
+def parse_argument(state):
+    item, state = alt(
+        parse_list,
+        parse_app,
+        parse_name,
+        parse_value
+    )(state)
+    _, state = empty_symbol_eater(state)
+
+    return item, state
+
+
+@combinator_function(custom_error="Failed to parse function application")
 def parse_app(state):
     _, state = empty_symbol_eater(state)
     _, state = left(state)
@@ -125,20 +127,7 @@ def parse_app(state):
     fun_name, state = parse_name(state)
     _, state = empty_symbol_eater(state)
 
-    items, state = take_while_possible(
-        transform(
-            sequence(
-                alt(
-                    parse_list,
-                    parse_app,
-                    parse_name,
-                    parse_value
-                ),
-                empty_symbol_eater
-            ),
-            lambda l: l[0]
-        )
-    )(state)
+    args, state = take_while_possible(parse_argument)(state)
     _, state = right(state)
 
-    return Result.make_value(Application(fun_name, items), state)
+    return Result.make_value(Application(fun_name, args), state)

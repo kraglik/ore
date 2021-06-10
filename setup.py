@@ -18,7 +18,7 @@ setup(
     long_description=readme,
     long_description_content_type='text/markdown',
     name='ore-combinators',
-    version='0.0.4',
+    version='0.0.5',
     description='Parser combinator library for Python',
     python_requires='==3.*,>=3.6.0',
     project_urls={'homepage': 'https://github.com/kraglik/ore', 'repository': 'https://github.com/kraglik/ore'},

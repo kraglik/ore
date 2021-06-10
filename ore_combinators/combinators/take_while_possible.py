@@ -1,13 +1,13 @@
 from typing import Tuple, Union, Any
 
-from ore_combinators.combinator import combinator
+from ore_combinators.combinator import combinator, Combinator
 from ore_combinators.parser_state import ParserState
 from ore_combinators.result import Result
 from ore_combinators.error import ParserError, EndOfFileError
 
 
 class take_while_possible(combinator):   # noqa
-    def __init__(self, c: combinator):
+    def __init__(self, c: Combinator):
         self._combinator = c
 
     def __call__(self, state: ParserState) -> Tuple[Any, ParserState]:

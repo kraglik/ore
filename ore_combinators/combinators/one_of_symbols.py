@@ -6,10 +6,6 @@ from ore_combinators.result import Result
 from ore_combinators.error import ParserError
 
 
-class OneOfSymbolsError(ParserError):
-    pass
-
-
 class one_of_symbols(combinator):   # noqa
     def __init__(self, symbols: Union[List[str], Tuple[str], str]):
         self._symbols = symbols
@@ -18,7 +14,7 @@ class one_of_symbols(combinator):   # noqa
         symbol = state.symbol
 
         if symbol not in self._symbols:
-            raise OneOfSymbolsError(
+            raise ParserError(
                 message='No symbol matched',
                 position=state.position
             )

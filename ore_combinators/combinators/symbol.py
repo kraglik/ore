@@ -6,10 +6,6 @@ from ore_combinators.result import Result
 from ore_combinators.error import ParserError, EndOfFileError
 
 
-class SymbolError(ParserError):
-    pass
-
-
 class symbol(combinator):   # noqa
     def __init__(self, s: str):
         self._symbol = s
@@ -21,6 +17,9 @@ class symbol(combinator):   # noqa
         s = state.symbol
 
         if s != self._symbol:
-            raise SymbolError(message='Symbol mismatch', position=state.position)
+            raise ParserError(
+                message=f"Symbol mismatch ( expected: '{self._symbol}', got: '{s}' )",
+                position=state.position
+            )
 
         return Result.make_value(s, state.next())

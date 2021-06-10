@@ -6,10 +6,6 @@ from ore_combinators.result import Result
 from ore_combinators.error import ParserError, EndOfFileError
 
 
-class StringError(ParserError):
-    pass
-
-
 class string(combinator):   # noqa
     def __init__(self, s: str):
         self._string = s
@@ -22,7 +18,7 @@ class string(combinator):   # noqa
                 raise EndOfFileError(position=initial_state.position)
 
             if char != state.symbol:
-                raise StringError(
+                raise ParserError(
                     message="String mismatch",
                     position=initial_state.position
                 )

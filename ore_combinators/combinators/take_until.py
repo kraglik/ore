@@ -1,17 +1,13 @@
-from typing import Tuple, Union, Any
+from typing import Tuple, Union, Any, Callable
 
-from ore_combinators.combinator import combinator
+from ore_combinators.combinator import combinator, Combinator
 from ore_combinators.parser_state import ParserState
 from ore_combinators.result import Result
 from ore_combinators.error import ParserError, EndOfFileError
 
 
-class TakeUntilError(ParserError):
-    pass
-
-
 class take_until(combinator):   # noqa
-    def __init__(self, c: combinator, condition: Union[combinator, callable]):
+    def __init__(self, c: Combinator, condition: Union[Combinator, Callable[[Any], bool]]):
         self._condition = condition
         self._combinator = c
 
@@ -43,7 +39,7 @@ class take_until(combinator):   # noqa
                 break
 
             except ParserError as e:
-                raise TakeUntilError(
+                raise ParserError(
                     message='TakeUntil error',
                     position=initial_state.position,
                     nested_error=e

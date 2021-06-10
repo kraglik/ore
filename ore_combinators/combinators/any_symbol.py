@@ -6,10 +6,6 @@ from ore_combinators.result import Result
 from ore_combinators.error import ParserError, EndOfFileError
 
 
-class AnySymbolError(ParserError):
-    pass
-
-
 class any_symbol(combinator):   # noqa
     def __call__(self, state: ParserState) -> Tuple[Any, ParserState]:
         if state.is_at_end():
